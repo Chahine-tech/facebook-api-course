@@ -11,7 +11,9 @@ export class PostsService {
   }
 
   findAll() {
-    return this.prisma.post.findMany({ include: { Author: true } });
+    return this.prisma.post.findMany({
+      include: { Author: { select: { id: true, email: true } } },
+    });
   }
 
   findOne(id: number) {
