@@ -20,12 +20,16 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const { authorization: token } = request.headers;
     if (!token) {
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Token not found', HttpStatus.UNAUTHORIZED);
     }
-    const payload = jwt.verify(token, process.env.JWT_SECRET) as IJwtPayload;
+    if (!token.startsWith('Bearer ')) {
+      throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
+    }
+    const jwtToken = token.slice(7);
+    const payload = jwt.verify(jwtToken, process.env.JWT_SECRET) as IJwtPayload;
     const user = await this.usersService.findOne(payload.id);
     if (!user) {
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
     }
     return true;
   }

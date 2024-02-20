@@ -30,14 +30,13 @@ export class AuthService {
     if (!isPasswordMatching) {
       return { message: 'Password incorrect' };
     }
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+    const { password, ...userWithoutPassword } = user;
     return {
-      token: jwt.sign(
-        {
-          id: user.id,
-        },
-        process.env.JWT_SECRET,
-      ),
-      user,
+      token,
+      user: userWithoutPassword,
     };
   }
 
