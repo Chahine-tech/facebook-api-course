@@ -29,7 +29,11 @@
 ## Installation
 
 ```bash
+# Install dependencies
 $ pnpm install
+
+#Create database
+$ pnpm start:db
 ```
 
 ## Running the app
