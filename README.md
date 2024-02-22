@@ -29,10 +29,10 @@
 ## Installation
 
 ```bash
-# Install dependencies
+# install dependencies
 $ pnpm install
 
-#Create database
+# create database
 $ pnpm start:db
 ```
 
