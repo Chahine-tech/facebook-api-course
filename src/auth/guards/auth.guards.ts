@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate {
       ) as IJwtPayload;
       const user = await this.usersService.findOne(payload.id);
       if (!user) {
-        throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
     } catch (error) {
       if (error instanceof jwt.TokenExpiredError) {
